@@ -12,6 +12,8 @@ import { OrganizationModule } from './modules/organization/organization.module';
 import { CatalogModule } from './modules/catalog/catalog.module';
 import { InventoryModule } from './modules/inventory/inventory.module';
 import { ProcurementModule } from './modules/procurement/procurement.module';
+import { ProductionModule } from './modules/production/production.module';
+import { PosModule } from './modules/pos/pos.module';
 import { HealthController } from './health.controller';
 
 @Module({
@@ -32,6 +34,8 @@ import { HealthController } from './health.controller';
     CatalogModule,
     InventoryModule,
     ProcurementModule,
+    ProductionModule,
+    PosModule,
   ],
   controllers: [HealthController],
   providers: [
