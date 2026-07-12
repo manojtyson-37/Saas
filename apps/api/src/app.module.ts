@@ -15,6 +15,7 @@ import { ProcurementModule } from './modules/procurement/procurement.module';
 import { ProductionModule } from './modules/production/production.module';
 import { PosModule } from './modules/pos/pos.module';
 import { AccountingModule } from './modules/accounting/accounting.module';
+import { HotelModule } from './modules/hotel/hotel.module';
 import { HealthController } from './health.controller';
 
 @Module({
@@ -38,6 +39,7 @@ import { HealthController } from './health.controller';
     ProductionModule,
     PosModule,
     AccountingModule,
+    HotelModule,
   ],
   controllers: [HealthController],
   providers: [
