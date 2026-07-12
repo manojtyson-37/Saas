@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: aureus
+          POSTGRES_PASSWORD: aureus_test
+          POSTGRES_DB: aureus_test
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U aureus"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://aureus:aureus_test@localhost:5432/aureus_test?schema=public
+      JWT_ACCESS_SECRET: ci-only-secret
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Validate Prisma schema & run migrations
+        run: |
+          pnpm --filter @aureus/database exec prisma validate
+          pnpm --filter @aureus/database exec prisma migrate deploy
+
+      - name: Build packages
+        run: pnpm --filter @aureus/shared build && pnpm --filter @aureus/database build
+
+      - name: Typecheck
+        run: pnpm --filter @aureus/api typecheck && pnpm --filter @aureus/web typecheck
+
+      - name: Unit tests
+        run: pnpm --filter @aureus/api test
+
+      - name: Seed against migrated database
+        run: pnpm --filter @aureus/database db:seed
+
+      - name: Build web
+        run: pnpm --filter @aureus/web build
