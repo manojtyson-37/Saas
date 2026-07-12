@@ -9,6 +9,9 @@ import { PermissionsGuard } from './common/guards/permissions.guard';
 import { GlobalExceptionFilter } from './common/filters/http-exception.filter';
 import { IdentityModule } from './modules/identity/identity.module';
 import { OrganizationModule } from './modules/organization/organization.module';
+import { CatalogModule } from './modules/catalog/catalog.module';
+import { InventoryModule } from './modules/inventory/inventory.module';
+import { ProcurementModule } from './modules/procurement/procurement.module';
 import { HealthController } from './health.controller';
 
 @Module({
@@ -26,6 +29,9 @@ import { HealthController } from './health.controller';
     }),
     IdentityModule,
     OrganizationModule,
+    CatalogModule,
+    InventoryModule,
+    ProcurementModule,
   ],
   controllers: [HealthController],
   providers: [

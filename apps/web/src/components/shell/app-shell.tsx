@@ -33,10 +33,9 @@ const NAV = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/organization', label: 'Organization', icon: Building2 },
   { href: '/users', label: 'Team', icon: Users },
-  // Future modules render here as they ship (inventory, procurement, POS…)
-  { href: '/inventory', label: 'Inventory', icon: Package, disabled: true },
-  { href: '/procurement', label: 'Procurement', icon: ShoppingCart, disabled: true },
-  { href: '/kitchen', label: 'Kitchen', icon: ChefHat, disabled: true },
+  { href: '/catalog', label: 'Catalog', icon: ChefHat },
+  { href: '/inventory', label: 'Inventory', icon: Package },
+  { href: '/procurement', label: 'Procurement', icon: ShoppingCart },
   { href: '/reports', label: 'Reports', icon: ClipboardList, disabled: true },
   { href: '/settings', label: 'Settings', icon: Settings },
 ] as const;
