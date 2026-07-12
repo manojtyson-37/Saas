@@ -16,6 +16,11 @@ import { ProductionModule } from './modules/production/production.module';
 import { PosModule } from './modules/pos/pos.module';
 import { AccountingModule } from './modules/accounting/accounting.module';
 import { HotelModule } from './modules/hotel/hotel.module';
+import { HrModule } from './modules/hr/hr.module';
+import { AssetsModule } from './modules/assets/assets.module';
+import { CrmModule } from './modules/crm/crm.module';
+import { BarModule } from './modules/bar/bar.module';
+import { AiModule } from './modules/ai/ai.module';
 import { HealthController } from './health.controller';
 
 @Module({
@@ -40,6 +45,11 @@ import { HealthController } from './health.controller';
     PosModule,
     AccountingModule,
     HotelModule,
+    HrModule,
+    AssetsModule,
+    CrmModule,
+    BarModule,
+    AiModule,
   ],
   controllers: [HealthController],
   providers: [

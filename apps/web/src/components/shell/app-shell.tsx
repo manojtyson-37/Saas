@@ -6,6 +6,8 @@ import { usePathname, useRouter } from 'next/navigation';
 import {
   BookOpen,
   BedDouble,
+  BarChart3,
+  Brain,
   Building2,
   ChefHat,
   ClipboardList,
@@ -20,6 +22,8 @@ import {
   ShoppingCart,
   Sun,
   Users,
+  UserCheck,
+  Wine,
 } from 'lucide-react';
 import { api, loadTokens, saveTokens } from '@/lib/api';
 import { Kbd, cx } from '@/components/ui/primitives';
@@ -44,6 +48,10 @@ const NAV = [
   { href: '/pos', label: 'POS', icon: Monitor },
   { href: '/accounting', label: 'Accounting', icon: BookOpen },
   { href: '/hotel', label: 'Hotel PMS', icon: BedDouble },
+  { href: '/hr', label: 'HR', icon: UserCheck },
+  { href: '/crm', label: 'CRM', icon: Users },
+  { href: '/bar', label: 'Bar', icon: Wine },
+  { href: '/ai', label: 'AI Analytics', icon: Brain },
   { href: '/reports', label: 'Reports', icon: ClipboardList, disabled: true },
   { href: '/settings', label: 'Settings', icon: Settings },
 ] as const;
