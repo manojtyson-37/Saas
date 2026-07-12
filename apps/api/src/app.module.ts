@@ -14,6 +14,7 @@ import { InventoryModule } from './modules/inventory/inventory.module';
 import { ProcurementModule } from './modules/procurement/procurement.module';
 import { ProductionModule } from './modules/production/production.module';
 import { PosModule } from './modules/pos/pos.module';
+import { AccountingModule } from './modules/accounting/accounting.module';
 import { HealthController } from './health.controller';
 
 @Module({
@@ -36,6 +37,7 @@ import { HealthController } from './health.controller';
     ProcurementModule,
     ProductionModule,
     PosModule,
+    AccountingModule,
   ],
   controllers: [HealthController],
   providers: [

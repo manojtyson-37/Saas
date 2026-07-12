@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import {
+  BookOpen,
   Building2,
   ChefHat,
   ClipboardList,
@@ -40,6 +41,7 @@ const NAV = [
   { href: '/procurement', label: 'Procurement', icon: ShoppingCart },
   { href: '/production', label: 'Production', icon: FlaskConical },
   { href: '/pos', label: 'POS', icon: Monitor },
+  { href: '/accounting', label: 'Accounting', icon: BookOpen },
   { href: '/reports', label: 'Reports', icon: ClipboardList, disabled: true },
   { href: '/settings', label: 'Settings', icon: Settings },
 ] as const;
