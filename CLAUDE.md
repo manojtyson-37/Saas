@@ -255,3 +255,15 @@ REDIS_URL=redis://localhost:6379
 - **PR**: #1 — open, ready for review, CI green
 - Never push to `main` directly
 - All typechecks must pass before committing: `pnpm typecheck`
+
+---
+
+## Deploying the API to Vercel
+
+The API deploys as a single serverless function (`apps/api/api/index.js` → tsc-compiled `dist/serverless.js`). Config lives in `apps/api/vercel.json`.
+
+**Vercel project settings (dashboard — required, not in the repo):**
+- **Root Directory**: `apps/api`, with "Include files outside root directory" **enabled** (pnpm workspace + `workspace:*` symlinks need the repo root).
+- **Env vars**: `DATABASE_URL` (must point at a **pooled** connection — pgbouncer / Neon / Supabase pooler port — serverless will exhaust direct connections), `JWT_ACCESS_SECRET`, `WEB_ORIGIN` (comma-separated allowed origins). Optional: `SWAGGER_ENABLED=true` to expose `/api/docs` in production.
+
+Local server (`main.ts`) is unchanged: `pnpm --filter @aureus/api dev`.
