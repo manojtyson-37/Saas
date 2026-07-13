@@ -22,6 +22,7 @@ import { CrmModule } from './modules/crm/crm.module';
 import { BarModule } from './modules/bar/bar.module';
 import { AiModule } from './modules/ai/ai.module';
 import { HealthController } from './health.controller';
+import { RootController } from './root.controller';
 
 @Module({
   imports: [
@@ -51,7 +52,7 @@ import { HealthController } from './health.controller';
     BarModule,
     AiModule,
   ],
-  controllers: [HealthController],
+  controllers: [HealthController, RootController],
   providers: [
     { provide: APP_GUARD, useClass: JwtAuthGuard },
     { provide: APP_GUARD, useClass: PermissionsGuard },
