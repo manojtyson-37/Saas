@@ -4,11 +4,14 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { randomBytes } from 'node:crypto';
-import { MODULES, SYSTEM_ROLES } from '@aureus/shared';
+import { SYSTEM_ROLES } from '@aureus/shared';
 import { PrismaService } from '../../../common/prisma.service';
+import { syncModuleSubscriptionsForPlan } from '../../billing/module-sync';
 import { PasswordService } from './password.service';
 import { TokenService, type IssuedTokens } from './token.service';
 import type { LoginDto, RegisterDto } from './dto/auth.dto';
+
+const STARTER_PLAN = 'starter';
 
 export interface AuthResult extends IssuedTokens {
   user: {
@@ -49,16 +52,13 @@ export class AuthService {
           status: 'TRIAL',
           trialEndsAt,
           country: dto.country ?? 'IN',
+          plan: STARTER_PLAN,
         },
       });
 
-      await tx.moduleSubscription.createMany({
-        data: MODULES.map((moduleCode) => ({
-          tenantId: tenant.id,
-          moduleCode,
-          active: true, // trial = everything on; billing flips these later
-        })),
-      });
+      // Every self-serve signup starts on the starter plan; upgrading
+      // (billing's change-plan) re-runs this same sync with the new plan.
+      await syncModuleSubscriptionsForPlan(tx, tenant.id, STARTER_PLAN);
 
       for (const def of SYSTEM_ROLES) {
         await tx.role.create({

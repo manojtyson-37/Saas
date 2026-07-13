@@ -29,6 +29,7 @@ export const ALWAYS_ACTIVE_MODULES: readonly ModuleCode[] = ['core', 'reporting'
 export const PERMISSION_MODULE_MAP: Record<string, ModuleCode> = {
   identity: 'core',
   organization: 'core',
+  settings: 'core',
   billing: 'core',
   catalog: 'pos',
   pos: 'pos',

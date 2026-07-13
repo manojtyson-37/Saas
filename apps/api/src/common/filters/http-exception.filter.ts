@@ -32,6 +32,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
         statusCode: status,
         error: normalized.error ?? exception.name,
         message: normalized.message ?? exception.message,
+        code: normalized.code,
         details: normalized.details,
         traceId,
       });

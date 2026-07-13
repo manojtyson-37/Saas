@@ -296,6 +296,7 @@ export const SYSTEM_ROLES: readonly SystemRoleDefinition[] = [
       'production.recipe:read', 'production.order:read', 'bar.variance:read', 'bar.bottle:read',
       'crm.*', 'accounting.report:read', 'hr.employee:read', 'hr.attendance:read',
       'assets.asset:read', 'reporting.*', 'ai.query:run', 'ai.forecast:read', 'ai.anomaly:read',
+      'billing.subscription:manage',
     ],
   },
   {

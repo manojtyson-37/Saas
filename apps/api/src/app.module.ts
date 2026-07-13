@@ -21,8 +21,10 @@ import { AssetsModule } from './modules/assets/assets.module';
 import { CrmModule } from './modules/crm/crm.module';
 import { BarModule } from './modules/bar/bar.module';
 import { AiModule } from './modules/ai/ai.module';
+import { BillingModule } from './modules/billing/billing.module';
 import { HealthController } from './health.controller';
 import { RootController } from './root.controller';
+import { SubscriptionGuard } from './common/guards/subscription.guard';
 
 @Module({
   imports: [
@@ -51,11 +53,13 @@ import { RootController } from './root.controller';
     CrmModule,
     BarModule,
     AiModule,
+    BillingModule,
   ],
   controllers: [HealthController, RootController],
   providers: [
     { provide: APP_GUARD, useClass: JwtAuthGuard },
     { provide: APP_GUARD, useClass: PermissionsGuard },
+    { provide: APP_GUARD, useClass: SubscriptionGuard },
     { provide: APP_FILTER, useClass: GlobalExceptionFilter },
   ],
 })
