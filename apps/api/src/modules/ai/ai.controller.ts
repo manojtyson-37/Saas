@@ -2,7 +2,7 @@ import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { RequirePermission } from '../../common/decorators/require-permission.decorator';
 import { AiService } from './ai.service';
-import type { AnomalyDetectionDto, NlQueryDto, RevenueForecastDto } from './dto/ai.dto';
+import { AnomalyDetectionDto, NlQueryDto, RevenueForecastDto } from './dto/ai.dto';
 
 @ApiTags('ai')
 @ApiBearerAuth()

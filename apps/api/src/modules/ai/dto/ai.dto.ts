@@ -8,6 +8,7 @@ import {
   IsUUID,
   Min,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 
 // ─── Natural-language query ───────────────────────────────────────────────────
 
@@ -30,7 +31,7 @@ export class RevenueForecastDto {
   @IsOptional() @IsUUID() companyId?: string;
   @IsOptional() @IsUUID() outletId?: string;
   @IsOptional() @IsEnum(ForecastGranularity) granularity?: ForecastGranularity;
-  @IsOptional() @IsNumber() @Min(1) periods?: number;
+  @IsOptional() @Type(() => Number) @IsNumber() @Min(1) periods?: number;
 }
 
 // ─── Anomaly detection ───────────────────────────────────────────────────────

@@ -2,7 +2,7 @@ import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { RequirePermission } from '../../common/decorators/require-permission.decorator';
 import { BillingService } from './billing.service';
-import type { ChangePlanDto } from './dto/billing.dto';
+import { ChangePlanDto } from './dto/billing.dto';
 
 @ApiTags('billing')
 @ApiBearerAuth()
