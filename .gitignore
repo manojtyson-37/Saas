@@ -10,3 +10,5 @@ coverage/
 *.log
 .DS_Store
 /packages/database/prisma/generated/
+.vercel
+.env*
