@@ -25,9 +25,10 @@ import {
   UserCheck,
   Wine,
 } from 'lucide-react';
-import { api, loadTokens, saveTokens } from '@/lib/api';
+import { api, loadTokens, saveTokens, billingApi, type Subscription } from '@/lib/api';
 import { Kbd, cx } from '@/components/ui/primitives';
 import { CommandPalette, type Command } from './command-palette';
+import { TrialBanner } from './trial-banner';
 
 interface Me {
   firstName: string;
@@ -60,6 +61,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const [me, setMe] = useState<Me | null>(null);
+  const [subscription, setSubscription] = useState<Subscription | null>(null);
   const [dark, setDark] = useState(false);
   const [paletteOpen, setPaletteOpen] = useState(false);
 
@@ -71,6 +73,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     api<Me>('/auth/me')
       .then(setMe)
       .catch(() => router.replace('/login'));
+    billingApi.getSubscription().then(setSubscription).catch(() => undefined);
   }, [router]);
 
   useEffect(() => {
@@ -204,6 +207,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
       {/* Main */}
       <div className="ml-60 flex-1">
+        <TrialBanner subscription={subscription} />
         <header className="sticky top-0 z-10 flex h-14 items-center justify-between border-b border-border bg-background/80 px-6 backdrop-blur">
           <button
             onClick={() => setPaletteOpen(true)}

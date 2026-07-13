@@ -1,6 +1,8 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
+import Link from 'next/link';
+import { ArrowRight, CreditCard } from 'lucide-react';
 import { api, type ApiError } from '@/lib/api';
 import { Card, cx } from '@/components/ui/primitives';
 
@@ -65,6 +67,23 @@ export default function SettingsPage() {
           <p className="text-sm text-destructive">{error}</p>
         </Card>
       )}
+
+      <Link href="/settings/billing">
+        <Card className="flex items-center justify-between gap-3 transition-colors hover:bg-accent">
+          <div className="flex items-center gap-3">
+            <div className="rounded-control bg-accent p-2 text-muted">
+              <CreditCard className="h-4 w-4" />
+            </div>
+            <div>
+              <p className="text-sm font-medium">Billing &amp; plan</p>
+              <p className="mt-0.5 text-[13px] text-muted">
+                View your subscription, trial status and upgrade options
+              </p>
+            </div>
+          </div>
+          <ArrowRight className="h-4 w-4 text-muted" />
+        </Card>
+      </Link>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {modules.map((mod) => {

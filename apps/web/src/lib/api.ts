@@ -102,7 +102,23 @@ export async function api<T>(path: string, options: RequestInit = {}): Promise<T
   try {
     return await rawRequest<T>(path, options, tokens?.accessToken);
   } catch (error) {
-    const status = (error as { api?: ApiError }).api?.statusCode;
+    const apiError = (error as { api?: ApiError }).api;
+    const status = apiError?.statusCode;
+
+    // Tenant is fully locked out (trial ended / subscription inactive) — every
+    // module route 402s, so send the user straight to the plan picker instead
+    // of letting every page render a raw error. Re-thrown so callers that want
+    // to show inline messaging (e.g. the billing page itself) still can.
+    if (
+      status === 402 &&
+      (apiError?.code === 'TRIAL_EXPIRED' || apiError?.code === 'SUBSCRIPTION_INACTIVE')
+    ) {
+      if (typeof window !== 'undefined' && window.location.pathname !== '/settings/billing') {
+        window.location.href = '/settings/billing';
+      }
+      throw error;
+    }
+
     if (status !== 401 || !tokens) throw error;
     const next = await refreshTokens();
     if (!next) {
@@ -112,6 +128,44 @@ export async function api<T>(path: string, options: RequestInit = {}): Promise<T
     return rawRequest<T>(path, options, next.accessToken);
   }
 }
+
+export interface PlanLimits {
+  maxLocations: number | null;
+  maxUsers: number | null;
+}
+
+export interface Plan {
+  code: string;
+  name: string;
+  priceInrMonthly: number;
+  moduleCodes: readonly string[];
+  limits: PlanLimits;
+  trialDays: number;
+}
+
+export interface SubscriptionModule {
+  code: string;
+  active: boolean;
+}
+
+export interface Subscription {
+  planCode: string;
+  plan: Plan | null;
+  status: 'TRIAL' | 'ACTIVE' | 'SUSPENDED' | 'CHURNED';
+  trialEndsAt: string | null;
+  trialDaysRemaining: number | null;
+  modules: SubscriptionModule[];
+}
+
+export const billingApi = {
+  getPlans: () => api<Plan[]>('/billing/plans'),
+  getSubscription: () => api<Subscription>('/billing/subscription'),
+  changePlan: (planCode: string) =>
+    api<Subscription>('/billing/subscription/change-plan', {
+      method: 'POST',
+      body: JSON.stringify({ planCode }),
+    }),
+};
 
 export const publicApi = {
   login: (payload: { email: string; password: string; tenantSlug?: string }) =>
